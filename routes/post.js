@@ -3,10 +3,15 @@ const {
     getPosts,
     createPost
 } = require('../controllers/post');
+const {
+    requireSignin
+} = require("../controllers/auth");
 const router = express.Router();
-const validator = require('../validator');
+const {
+    createPostValidator
+} = require('../validator');
 
-router.get('/', getPosts);
-router.post('/post', validator.createPostValidator, createPost);
+router.get('/', requireSignin, getPosts);
+router.post('/post', createPostValidator, createPost);
 
 module.exports = router;
